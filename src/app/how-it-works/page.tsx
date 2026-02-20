@@ -1,9 +1,20 @@
-import React from 'react';
+
+"use client"
+
+import React, { useState, useEffect } from 'react';
 import { ChefHat, Camera, Cpu, Utensils, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export default function HowItWorksPage() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-50 glass border-b border-white/20">

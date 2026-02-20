@@ -1,6 +1,7 @@
+
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChefHat, Sparkles, ArrowRight, RefreshCw, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
@@ -15,6 +16,11 @@ export default function LeftoverChefPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<GenerateRecipeFromImageOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleGenerateRecipe = async () => {
     if (!image) return;
@@ -27,12 +33,12 @@ export default function LeftoverChefPage() {
       const response = await generateRecipeFromImage({ photoDataUri: image });
       
       if (!response.hasFood) {
-        setError(response.errorMessage || "Sajnos nem sikerült azonosítani a hozzávalókat. Próbálj meg egy élesebb fotót készíteni!");
+        setError(response.errorMessage || "Sajnos nem sikerült azonosítani a hozzávalókat. Próbáljon meg egy élesebb fotót készíteni!");
       } else {
         setResult(response);
       }
     } catch (err) {
-      setError("Valami hiba történt a digitális konyhánkban. Kérlek, próbáld újra!");
+      setError("Valami hiba történt a digitális konyhánkban. Kérjük, próbálja újra!");
       console.error(err);
     } finally {
       setLoading(false);
@@ -46,12 +52,14 @@ export default function LeftoverChefPage() {
     setLoading(false);
   };
 
+  if (!mounted) return null;
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigáció / Fejléc */}
       <header className="sticky top-0 z-50 glass border-b border-white/20">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2" onClick={resetApp} style={{ cursor: 'pointer' }}>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={resetApp}>
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg">
               <ChefHat className="text-primary-foreground w-6 h-6" />
             </div>
@@ -61,9 +69,9 @@ export default function LeftoverChefPage() {
           </div>
           <div className="hidden md:flex items-center gap-6">
             <Link href="/how-it-works">
-              <span className="text-sm font-medium text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Hogyan működik?</span>
+              <span className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Hogyan működik?</span>
             </Link>
-            <span className="text-sm font-medium text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Receptek</span>
+            <span className="text-sm font-medium text-muted-foreground hover:text-foreground cursor-not-allowed transition-colors">Receptek</span>
             <Button size="sm" className="rounded-full bg-accent text-accent-foreground">Bejelentkezés</Button>
           </div>
         </div>
@@ -160,9 +168,9 @@ export default function LeftoverChefPage() {
               </span>
             </div>
             <div className="flex gap-8 text-sm font-medium text-muted-foreground">
-              <span>Adatvédelmi irányelvek</span>
-              <span>Felhasználási feltételek</span>
-              <span>Kapcsolat</span>
+              <span className="cursor-pointer hover:text-foreground transition-colors">Adatvédelmi irányelvek</span>
+              <span className="cursor-pointer hover:text-foreground transition-colors">Felhasználási feltételek</span>
+              <span className="cursor-pointer hover:text-foreground transition-colors">Kapcsolat</span>
             </div>
             <p className="text-xs text-muted-foreground font-medium">
               &copy; {new Date().getFullYear()} MaradékSéf AI. Kevesebb hulladék, több íz.

@@ -1,3 +1,6 @@
+
+"use client"
+
 import React, { useState, useEffect } from 'react';
 import { Sparkles, ChefHat } from 'lucide-react';
 
@@ -31,7 +34,7 @@ export function ChefLoader() {
       </div>
       <div className="space-y-2">
         <h3 className="font-headline text-2xl font-bold tracking-tight">Varázslat készülődik...</h3>
-        <p className="text-muted-foreground font-medium italic transition-all duration-500">
+        <p className="text-muted-foreground font-medium italic transition-all duration-500 min-h-[1.5em]">
           {messages[messageIndex]}
         </p>
       </div>
