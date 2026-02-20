@@ -8,6 +8,7 @@ import { UploadZone } from '@/components/upload-zone';
 import { RecipeCard } from '@/components/recipe-card';
 import { ChefLoader } from '@/components/chef-loader';
 import { generateRecipeFromImage, type GenerateRecipeFromImageOutput } from '@/ai/flows/ai-recipe-generation-from-image';
+import Link from 'next/link';
 
 export default function LeftoverChefPage() {
   const [image, setImage] = useState<string | null>(null);
@@ -59,7 +60,9 @@ export default function LeftoverChefPage() {
             </span>
           </div>
           <div className="hidden md:flex items-center gap-6">
-            <span className="text-sm font-medium text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Hogyan működik?</span>
+            <Link href="/how-it-works">
+              <span className="text-sm font-medium text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Hogyan működik?</span>
+            </Link>
             <span className="text-sm font-medium text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Receptek</span>
             <Button size="sm" className="rounded-full bg-accent text-accent-foreground">Bejelentkezés</Button>
           </div>
