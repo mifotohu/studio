@@ -1,10 +1,10 @@
 'use server';
 /**
- * @fileOverview This file implements a Genkit flow to generate a recipe from an image of ingredients.
+ * @fileOverview Ez a fájl valósítja meg a Genkit flow-t, amely képek alapján receptet generál.
  *
- * - generateRecipeFromImage - A function that handles the recipe generation process from an image.
- * - GenerateRecipeFromImageInput - The input type for the generateRecipeFromImage function.
- * - GenerateRecipeFromImageOutput - The return type for the generateRecipeFromImage function.
+ * - generateRecipeFromImage - A funkció, amely a receptgenerálást végzi egy kép alapján.
+ * - GenerateRecipeFromImageInput - A bemeneti típus.
+ * - GenerateRecipeFromImageOutput - A kimeneti típus.
  */
 
 import { ai } from '@/ai/genkit';
@@ -14,21 +14,21 @@ const GenerateRecipeFromImageInputSchema = z.object({
   photoDataUri: z
     .string()
     .describe(
-      "A photo of leftover ingredients, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+      "Egy fotó a maradék hozzávalókról, data URI formátumban, amelynek tartalmaznia kell a MIME típust és Base64 kódolást. Elvárt formátum: 'data:<mimetype>;base64,<encoded_data>'."
     ),
 });
 export type GenerateRecipeFromImageInput = z.infer<typeof GenerateRecipeFromImageInputSchema>;
 
 const RecipeOutputSchema = z.object({
-  hasFood: z.boolean().describe('Whether the image contains identifiable food ingredients.'),
-  errorMessage: z.string().optional().describe('An error message if no food is detected or processing fails.'),
+  hasFood: z.boolean().describe('Azt jelzi, hogy a kép tartalmaz-e azonosítható élelmiszert.'),
+  errorMessage: z.string().optional().describe('Hibaüzenet, ha nem észlelhető étel vagy a feldolgozás sikertelen.'),
   recipe: z.object({
-    title: z.string().describe('The title of the generated recipe.'),
-    description: z.string().describe('A brief description of the recipe.'),
-    ingredients: z.array(z.string()).describe('A list of ingredients required for the recipe.'),
-    instructions: z.array(z.string()).describe('Step-by-step instructions for preparing the recipe.'),
-    tips: z.array(z.string()).optional().describe('Optional tips for the recipe.'),
-  }).optional(), // recipe object is optional if hasFood is false
+    title: z.string().describe('A generált recept címe.'),
+    description: z.string().describe('A recept rövid leírása.'),
+    ingredients: z.array(z.string()).describe('A recepthez szükséges hozzávalók listája.'),
+    instructions: z.array(z.string()).describe('Lépésről lépésre kidolgozott elkészítési útmutató.'),
+    tips: z.array(z.string()).optional().describe('Opcionális tippek a recepthez.'),
+  }).optional(),
 });
 export type GenerateRecipeFromImageOutput = z.infer<typeof RecipeOutputSchema>;
 
@@ -40,22 +40,22 @@ const generateRecipePrompt = ai.definePrompt({
   name: 'generateRecipeFromImagePrompt',
   input: { schema: GenerateRecipeFromImageInputSchema },
   output: { schema: RecipeOutputSchema },
-  prompt: `You are a 'Leftover Chef' AI assistant, specialized in creating delicious and complete recipes from available ingredients.
-Your task is to analyze the provided image of food ingredients and generate a recipe.
+  prompt: `Te egy 'Maradék Séf' AI asszisztens vagy, aki arra specializálódott, hogy a rendelkezésre álló alapanyagokból finom és teljes recepteket készítsen.
+A feladatod, hogy elemezd a kapott képet az alapanyagokról, és generálj egy receptet MAGYAR NYELVEN.
 
-If the image contains identifiable food ingredients, set 'hasFood' to 'true' and generate a complete, edible, and delicious recipe. The recipe should include:
-1.  A creative and appealing title.
-2.  A brief description of the recipe.
-3.  A list of all ingredients identified in the image, along with any other common pantry items needed to make a complete meal. Be specific with quantities and states (e.g., "1 medium onion, diced", "200g cooked chicken, shredded").
-4.  Step-by-step cooking instructions, clearly numbered.
-5.  Helpful tips for preparing or serving the dish.
+Ha a képen azonosítható élelmiszer található, állítsd a 'hasFood' értéket 'true'-ra, és generálj egy teljes, ehető és finom receptet. A recept tartalmazza a következőket:
+1. Kreatív és vonzó cím.
+2. Rövid leírás a receptről.
+3. A képen azonosított összes hozzávaló listája, kiegészítve az alapvető éléskamrai cikkekkel (pl. só, olaj), amelyek szükségesek a teljes fogáshoz. Légy pontos a mennyiségekkel és az állapotokkal (pl. "1 közepes vöröshagyma, felkockázva", "200g sült csirke, felaprítva").
+4. Lépésről lépésre kidolgozott főzési útmutató, egyértelműen sorszámozva.
+5. Hasznos tippek az étel elkészítéséhez vagy tálalásához.
 
-If you cannot identify any food ingredients in the image, or if the image is not food-related, set 'hasFood' to 'false' and provide a helpful 'errorMessage' to the user, suggesting they upload an image of food. Do not generate a 'recipe' object in this case.
+Ha nem tudsz élelmiszert azonosítani a képen, vagy ha a kép nem étellel kapcsolatos, állítsd a 'hasFood' értéket 'false'-ra, és adj meg egy segítőkész 'errorMessage'-t a felhasználónak magyarul, javasolva, hogy töltsön fel egy képet az alapanyagokról. Ebben az esetben ne generálj 'recipe' objektumot.
 
-Return the response strictly in the following JSON format:
+A választ szigorúan a megadott JSON formátumban add vissza, és minden szöveges tartalom MAGYARUL legyen.
 {{_output_schema}}
 
-Image of ingredients: {{media url=photoDataUri}}`,
+Kép a hozzávalókról: {{media url=photoDataUri}}`,
 });
 
 const generateRecipeFromImageFlow = ai.defineFlow(

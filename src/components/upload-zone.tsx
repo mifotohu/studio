@@ -81,20 +81,20 @@ export function UploadZone({ onImageSelected, disabled }: UploadZoneProps) {
           </div>
 
           <div className="space-y-2">
-            <h3 className="font-headline text-2xl font-bold tracking-tight">Upload Your Leftovers</h3>
+            <h3 className="font-headline text-2xl font-bold tracking-tight">Töltse fel a maradékokat</h3>
             <p className="text-muted-foreground max-w-sm mx-auto">
-              Drag & drop ingredients or snap a photo of your fridge to see the magic happen.
+              Húzza ide a fotót a hozzávalókról, vagy készítsen egy képet a hűtőjéről.
             </p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-4">
             <Button variant="outline" className="rounded-full gap-2 px-6">
               <Upload className="w-4 h-4" />
-              Upload Photo
+              Fotó feltöltése
             </Button>
             <Button className="rounded-full gap-2 px-6 bg-accent text-accent-foreground hover:bg-accent/90">
               <Camera className="w-4 h-4" />
-              Take Photo
+              Fotó készítése
             </Button>
           </div>
         </div>
@@ -115,7 +115,7 @@ export function UploadZone({ onImageSelected, disabled }: UploadZoneProps) {
             <div className="bg-white/90 dark:bg-zinc-900/90 backdrop-blur px-6 py-3 rounded-full shadow-xl border border-white/20">
               <p className="font-medium text-sm flex items-center gap-2">
                 <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                Image ready for processing
+                A kép készen áll a feldolgozásra
               </p>
             </div>
           </div>

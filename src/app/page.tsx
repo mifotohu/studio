@@ -26,12 +26,12 @@ export default function LeftoverChefPage() {
       const response = await generateRecipeFromImage({ photoDataUri: image });
       
       if (!response.hasFood) {
-        setError(response.errorMessage || "Sorry, I couldn't identify any ingredients. Try taking a clearer photo!");
+        setError(response.errorMessage || "Sajnos nem sikerült azonosítani a hozzávalókat. Próbálj meg egy élesebb fotót készíteni!");
       } else {
         setResult(response);
       }
     } catch (err) {
-      setError("Something went wrong with our digital kitchen. Please try again!");
+      setError("Valami hiba történt a digitális konyhánkban. Kérlek, próbáld újra!");
       console.error(err);
     } finally {
       setLoading(false);
@@ -47,7 +47,7 @@ export default function LeftoverChefPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navigation / Header */}
+      {/* Navigáció / Fejléc */}
       <header className="sticky top-0 z-50 glass border-b border-white/20">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2" onClick={resetApp} style={{ cursor: 'pointer' }}>
@@ -55,42 +55,42 @@ export default function LeftoverChefPage() {
               <ChefHat className="text-primary-foreground w-6 h-6" />
             </div>
             <span className="font-headline text-2xl font-bold tracking-tight">
-              Leftover<span className="text-primary">Chef</span>
+              Maradék<span className="text-primary">Séf</span>
             </span>
           </div>
           <div className="hidden md:flex items-center gap-6">
-            <span className="text-sm font-medium text-muted-foreground hover:text-foreground cursor-pointer transition-colors">How it works</span>
-            <span className="text-sm font-medium text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Recipes</span>
-            <Button size="sm" className="rounded-full bg-accent text-accent-foreground">Sign In</Button>
+            <span className="text-sm font-medium text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Hogyan működik?</span>
+            <span className="text-sm font-medium text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Receptek</span>
+            <Button size="sm" className="rounded-full bg-accent text-accent-foreground">Bejelentkezés</Button>
           </div>
         </div>
       </header>
 
       <main className="flex-grow container mx-auto px-6 py-12 space-y-16">
-        {/* Hero Section */}
+        {/* Hero Szekció */}
         {!result && !loading && (
           <div className="text-center space-y-6 max-w-3xl mx-auto animate-in fade-in slide-in-from-top-4 duration-1000">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-xs uppercase tracking-widest">
               <Sparkles className="w-3 h-3" />
-              Powered by Vision AI
+              Látás-alapú AI segítségével
             </div>
             <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tight leading-tight">
-              Your Leftovers, <br />
-              <span className="text-primary italic">Reimagined.</span>
+              A maradékai, <br />
+              <span className="text-primary italic">újragondolva.</span>
             </h1>
             <p className="text-xl text-muted-foreground font-medium leading-relaxed">
-              Don't let ingredients go to waste. Take a photo and get a personalized, 
-              delicious recipe instantly from our AI chef.
+              Ne hagyja kárba veszni az alapanyagokat. Készítsen egy fotót, és kapjon 
+              azonnal egy személyre szabott, ízletes receptet AI séfünktől.
             </p>
           </div>
         )}
 
-        {/* Action Area */}
+        {/* Akció Terület */}
         <section className="max-w-4xl mx-auto space-y-8">
           {error && (
             <Alert variant="destructive" className="rounded-2xl border-destructive/50 animate-in shake-1 duration-500">
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Kitchen Mishap!</AlertTitle>
+              <AlertTitle>Konyhai baki!</AlertTitle>
               <AlertDescription className="font-medium">
                 {error}
               </AlertDescription>
@@ -108,7 +108,7 @@ export default function LeftoverChefPage() {
                     className="h-16 px-12 rounded-full text-lg font-bold shadow-2xl hover:scale-105 transition-all group gap-3"
                     onClick={handleGenerateRecipe}
                   >
-                    Cook Something Great
+                    Főzzünk valami jót
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </div>
@@ -126,17 +126,17 @@ export default function LeftoverChefPage() {
             <div className="space-y-8">
               <div className="flex justify-between items-center bg-white/50 p-4 rounded-2xl border border-white/20">
                 <p className="text-muted-foreground font-medium italic">
-                  Look what we found in your kitchen!
+                  Nézze, mit találtunk a konyhájában!
                 </p>
                 <Button variant="ghost" onClick={resetApp} className="rounded-full gap-2">
                   <RefreshCw className="w-4 h-4" />
-                  Try Another
+                  Új fotó
                 </Button>
               </div>
               <RecipeCard recipe={result.recipe} />
               <div className="flex justify-center pb-12">
                 <Button variant="outline" size="lg" onClick={resetApp} className="rounded-full px-8">
-                  Back to Kitchen
+                  Vissza a konyhába
                 </Button>
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function LeftoverChefPage() {
         </section>
       </main>
 
-      {/* Footer */}
+      {/* Lábléc */}
       <footer className="py-12 border-t border-white/10 glass">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
@@ -153,16 +153,16 @@ export default function LeftoverChefPage() {
                 <ChefHat className="text-primary-foreground w-4 h-4" />
               </div>
               <span className="font-headline text-xl font-bold tracking-tight">
-                LeftoverChef
+                MaradékSéf
               </span>
             </div>
             <div className="flex gap-8 text-sm font-medium text-muted-foreground">
-              <span>Privacy Policy</span>
-              <span>Terms of Service</span>
-              <span>Contact Us</span>
+              <span>Adatvédelmi irányelvek</span>
+              <span>Felhasználási feltételek</span>
+              <span>Kapcsolat</span>
             </div>
             <p className="text-xs text-muted-foreground font-medium">
-              &copy; {new Date().getFullYear()} LeftoverChef AI. Reducing waste, one bite at a time.
+              &copy; {new Date().getFullYear()} MaradékSéf AI. Kevesebb hulladék, több íz.
             </p>
           </div>
         </div>

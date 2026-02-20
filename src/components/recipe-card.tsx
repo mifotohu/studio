@@ -21,7 +21,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
         <div className="flex justify-between items-start">
           <div className="space-y-2">
             <Badge variant="secondary" className="bg-primary/20 text-primary-foreground border-primary/10 px-3 py-1 rounded-full uppercase tracking-widest text-[10px] font-bold">
-              Chef's Special
+              Séf Ajánlata
             </Badge>
             <CardTitle className="font-headline text-4xl font-bold tracking-tight text-foreground">
               {recipe.title}
@@ -43,7 +43,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
             <div className="p-2 bg-primary/20 rounded-lg">
               <CheckCircle2 className="w-5 h-5 text-primary" />
             </div>
-            <h3 className="font-headline text-2xl font-bold">Ingredients</h3>
+            <h3 className="font-headline text-2xl font-bold">Hozzávalók</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {recipe.ingredients.map((ingredient, idx) => (
@@ -63,7 +63,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
             <div className="p-2 bg-primary/20 rounded-lg">
               <ListOrdered className="w-5 h-5 text-primary" />
             </div>
-            <h3 className="font-headline text-2xl font-bold">Step-by-Step Guide</h3>
+            <h3 className="font-headline text-2xl font-bold">Lépésről lépésre</h3>
           </div>
           <div className="space-y-8 relative">
             {recipe.instructions.map((step, idx) => (
@@ -95,7 +95,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
                 <div className="p-2 bg-accent/20 rounded-lg">
                   <Lightbulb className="w-5 h-5 text-accent" />
                 </div>
-                <h3 className="font-headline text-2xl font-bold">Chef's Secrets</h3>
+                <h3 className="font-headline text-2xl font-bold">A Séf Titkai</h3>
               </div>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {recipe.tips.map((tip, idx) => (

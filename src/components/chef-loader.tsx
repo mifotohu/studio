@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, ChefHat } from 'lucide-react';
 
 const messages = [
-  "Our digital chef is inspecting your fridge...",
-  "Analyzing ingredients for gourmet potential...",
-  "Flipping through digital cookbooks...",
-  "Perfecting the spice combination...",
-  "Sharpening the virtual knives...",
-  "Consulting the secret recipe archive...",
-  "Almost there! Simmering the flavors...",
-  "Thinking like a master chef..."
+  "Digitális séfünk éppen átnézi a hűtőjét...",
+  "Elemezzük a hozzávalókban rejlő lehetőségeket...",
+  "Digitális szakácskönyvekben lapozgatunk...",
+  "Tökéletesítjük a fűszerkombinációkat...",
+  "Élezzük a virtuális késeket...",
+  "Konzultálunk a titkos receptarchívummal...",
+  "Már majdnem kész! Az ízek összeérnek...",
+  "Mesterchef módba kapcsoltunk..."
 ];
 
 export function ChefLoader() {
@@ -30,7 +30,7 @@ export function ChefLoader() {
         <Sparkles className="absolute -top-2 -right-2 w-6 h-6 text-accent animate-pulse" />
       </div>
       <div className="space-y-2">
-        <h3 className="font-headline text-2xl font-bold tracking-tight">Mixing up magic...</h3>
+        <h3 className="font-headline text-2xl font-bold tracking-tight">Varázslat készülődik...</h3>
         <p className="text-muted-foreground font-medium italic transition-all duration-500">
           {messages[messageIndex]}
         </p>

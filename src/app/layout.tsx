@@ -2,8 +2,8 @@ import type {Metadata} from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Leftover Chef | Transform leftovers into gourmet meals',
-  description: 'Snap a photo of your fridge and let our AI chef create a delicious recipe for you.',
+  title: 'Maradék Séf | Varázsoljon gourmet fogást a maradékokból',
+  description: 'Fotózza le a hűtőjét, és hagyja, hogy AI séfünk ízletes receptet készítsen Önnek.',
 };
 
 export default function RootLayout({
@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="hu">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
