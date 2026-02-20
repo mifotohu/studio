@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useState, useEffect } from 'react';
@@ -80,9 +79,9 @@ export default function LeftoverChefPage() {
       <main className="flex-grow container mx-auto px-6 py-12 space-y-16">
         {!mounted ? (
           <div className="flex items-center justify-center py-20">
-             <div className="animate-pulse flex flex-col items-center gap-4">
-               <ChefHat className="w-12 h-12 text-muted" />
-               <div className="h-4 w-32 bg-muted rounded"></div>
+             <div className="flex flex-col items-center gap-4">
+               <ChefHat className="w-12 h-12 text-muted animate-pulse" />
+               <div className="h-4 w-32 bg-muted rounded animate-pulse"></div>
              </div>
           </div>
         ) : (
@@ -167,7 +166,7 @@ export default function LeftoverChefPage() {
       </main>
 
       {/* Lábléc */}
-      <footer className="py-12 border-t border-white/10 glass">
+      <footer className="py-12 border-t border-white/10 glass mt-auto">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex items-center gap-2">
