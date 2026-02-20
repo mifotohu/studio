@@ -55,7 +55,6 @@ export default function LeftoverChefPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navigáció / Fejléc */}
       <header className="sticky top-0 z-50 glass border-b border-white/20">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer" onClick={resetApp}>
@@ -67,8 +66,8 @@ export default function LeftoverChefPage() {
             </span>
           </div>
           <div className="hidden md:flex items-center gap-6">
-            <Link href="/how-it-works">
-              <span className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Hogyan működik?</span>
+            <Link href="/how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              Hogyan működik?
             </Link>
             <span className="text-sm font-medium text-muted-foreground hover:text-foreground cursor-not-allowed transition-colors">Receptek</span>
             <Button size="sm" className="rounded-full bg-accent text-accent-foreground">Bejelentkezés</Button>
@@ -86,7 +85,6 @@ export default function LeftoverChefPage() {
           </div>
         ) : (
           <>
-            {/* Hero Szekció */}
             {!result && !loading && (
               <div className="text-center space-y-6 max-w-3xl mx-auto animate-in fade-in slide-in-from-top-4 duration-1000">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-xs uppercase tracking-widest">
@@ -104,7 +102,6 @@ export default function LeftoverChefPage() {
               </div>
             )}
 
-            {/* Akció Terület */}
             <section className="max-w-4xl mx-auto space-y-8">
               {error && (
                 <Alert variant="destructive" className="rounded-2xl border-destructive/50 animate-in shake-1 duration-500">
@@ -165,7 +162,6 @@ export default function LeftoverChefPage() {
         )}
       </main>
 
-      {/* Lábléc */}
       <footer className="py-12 border-t border-white/10 glass mt-auto">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
