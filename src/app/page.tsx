@@ -17,9 +17,11 @@ export default function LeftoverChefPage() {
   const [result, setResult] = useState<GenerateRecipeFromImageOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [year, setYear] = useState<number>(2025);
 
   useEffect(() => {
     setMounted(true);
+    setYear(new Date().getFullYear());
   }, []);
 
   const handleGenerateRecipe = async () => {
@@ -52,8 +54,6 @@ export default function LeftoverChefPage() {
     setLoading(false);
   };
 
-  if (!mounted) return null;
-
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigáció / Fejléc */}
@@ -78,81 +78,92 @@ export default function LeftoverChefPage() {
       </header>
 
       <main className="flex-grow container mx-auto px-6 py-12 space-y-16">
-        {/* Hero Szekció */}
-        {!result && !loading && (
-          <div className="text-center space-y-6 max-w-3xl mx-auto animate-in fade-in slide-in-from-top-4 duration-1000">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-xs uppercase tracking-widest">
-              <Sparkles className="w-3 h-3" />
-              Látás-alapú AI segítségével
-            </div>
-            <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tight leading-tight">
-              A maradékai, <br />
-              <span className="text-primary italic">újragondolva.</span>
-            </h1>
-            <p className="text-xl text-muted-foreground font-medium leading-relaxed">
-              Ne hagyja kárba veszni az alapanyagokat. Készítsen egy fotót, és kapjon 
-              azonnal egy személyre szabott, ízletes receptet AI séfünktől.
-            </p>
+        {!mounted ? (
+          <div className="flex items-center justify-center py-20">
+             <div className="animate-pulse flex flex-col items-center gap-4">
+               <ChefHat className="w-12 h-12 text-muted" />
+               <div className="h-4 w-32 bg-muted rounded"></div>
+             </div>
           </div>
-        )}
+        ) : (
+          <>
+            {/* Hero Szekció */}
+            {!result && !loading && (
+              <div className="text-center space-y-6 max-w-3xl mx-auto animate-in fade-in slide-in-from-top-4 duration-1000">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-xs uppercase tracking-widest">
+                  <Sparkles className="w-3 h-3" />
+                  Látás-alapú AI segítségével
+                </div>
+                <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tight leading-tight">
+                  A maradékai, <br />
+                  <span className="text-primary italic">újragondolva.</span>
+                </h1>
+                <p className="text-xl text-muted-foreground font-medium leading-relaxed">
+                  Ne hagyja kárba veszni az alapanyagokat. Készítsen egy fotót, és kapjon 
+                  azonnal egy személyre szabott, ízletes receptet AI séfünktől.
+                </p>
+              </div>
+            )}
 
-        {/* Akció Terület */}
-        <section className="max-w-4xl mx-auto space-y-8">
-          {error && (
-            <Alert variant="destructive" className="rounded-2xl border-destructive/50 animate-in shake-1 duration-500">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Konyhai baki!</AlertTitle>
-              <AlertDescription className="font-medium">
-                {error}
-              </AlertDescription>
-            </Alert>
-          )}
+            {/* Akció Terület */}
+            <section className="max-w-4xl mx-auto space-y-8">
+              {error && (
+                <Alert variant="destructive" className="rounded-2xl border-destructive/50 animate-in shake-1 duration-500">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Konyhai baki!</AlertTitle>
+                  <AlertDescription className="font-medium">
+                    {error}
+                  </AlertDescription>
+                </Alert>
+              )}
 
-          {!result && !loading && (
-            <div className="space-y-8">
-              <UploadZone onImageSelected={setImage} disabled={loading} />
-              
-              {image && (
-                <div className="flex justify-center animate-in fade-in zoom-in-95 duration-300">
-                  <Button 
-                    size="lg" 
-                    className="h-16 px-12 rounded-full text-lg font-bold shadow-2xl hover:scale-105 transition-all group gap-3"
-                    onClick={handleGenerateRecipe}
-                  >
-                    Főzzünk valami jót
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+              {!result && !loading && (
+                <div className="space-y-8">
+                  <UploadZone onImageSelected={setImage} disabled={loading} />
+                  
+                  {image && (
+                    <div className="flex justify-center animate-in fade-in zoom-in-95 duration-300">
+                      <Button 
+                        size="lg" 
+                        className="h-16 px-12 rounded-full text-lg font-bold shadow-2xl hover:scale-105 transition-all group gap-3"
+                        onClick={handleGenerateRecipe}
+                      >
+                        Főzzünk valami jót
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
               )}
-            </div>
-          )}
 
-          {loading && (
-            <div className="py-20">
-              <ChefLoader />
-            </div>
-          )}
+              {loading && (
+                <div className="py-20">
+                  <ChefLoader />
+                </div>
+              )}
 
-          {result && result.recipe && (
-            <div className="space-y-8">
-              <div className="flex justify-between items-center bg-white/50 p-4 rounded-2xl border border-white/20">
-                <p className="text-muted-foreground font-medium italic">
-                  Nézze, mit találtunk a konyhájában!
-                </p>
-                <Button variant="ghost" onClick={resetApp} className="rounded-full gap-2">
-                  <RefreshCw className="w-4 h-4" />
-                  Új fotó
-                </Button>
-              </div>
-              <RecipeCard recipe={result.recipe} />
-              <div className="flex justify-center pb-12">
-                <Button variant="outline" size="lg" onClick={resetApp} className="rounded-full px-8">
-                  Vissza a konyhába
-                </Button>
-              </div>
-            </div>
-          )}
-        </section>
+              {result && result.recipe && (
+                <div className="space-y-8">
+                  <div className="flex justify-between items-center bg-white/50 p-4 rounded-2xl border border-white/20">
+                    <p className="text-muted-foreground font-medium italic">
+                      Nézze, mit találtunk a konyhájában!
+                    </p>
+                    <Button variant="ghost" onClick={resetApp} className="rounded-full gap-2">
+                      <RefreshCw className="w-4 h-4" />
+                      Új fotó
+                    </Button>
+                  </div>
+                  <RecipeCard recipe={result.recipe} />
+                  <div className="flex justify-center pb-12">
+                    <Button variant="outline" size="lg" onClick={resetApp} className="rounded-full px-8">
+                      Vissza a konyhába
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </section>
+          </>
+        )}
       </main>
 
       {/* Lábléc */}
@@ -173,7 +184,7 @@ export default function LeftoverChefPage() {
               <span className="cursor-pointer hover:text-foreground transition-colors">Kapcsolat</span>
             </div>
             <p className="text-xs text-muted-foreground font-medium">
-              &copy; {new Date().getFullYear()} MaradékSéf AI. Kevesebb hulladék, több íz.
+              &copy; {year} MaradékSéf AI. Kevesebb hulladék, több íz.
             </p>
           </div>
         </div>
