@@ -1,4 +1,3 @@
-'use server';
 /**
  * @fileOverview Ez a fájl valósítja meg a Genkit flow-t, amely képek alapján receptet generál.
  *

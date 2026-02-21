@@ -7,7 +7,7 @@ import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { UploadZone } from '@/components/upload-zone';
 import { RecipeCard } from '@/components/recipe-card';
 import { ChefLoader } from '@/components/chef-loader';
-import { generateRecipeFromImage, type GenerateRecipeFromImageOutput } from '@/ai/flows/ai-recipe-generation-from-image';
+import type { GenerateRecipeFromImageOutput } from '@/ai/flows/ai-recipe-generation-from-image';
 import Link from 'next/link';
 
 export default function LeftoverChefPage() {
@@ -31,12 +31,24 @@ export default function LeftoverChefPage() {
     setResult(null);
 
     try {
-      const response = await generateRecipeFromImage({ photoDataUri: image });
-      
-      if (!response.hasFood) {
-        setError(response.errorMessage || "Sajnos nem sikerült azonosítani a hozzávalókat. Próbáljon meg egy élesebb fotót készíteni!");
+      const response = await fetch('/api/generate-recipe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ photoDataUri: image }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate recipe');
+      }
+
+      const data: GenerateRecipeFromImageOutput = await response.json();
+
+      if (!data.hasFood) {
+        setError(data.errorMessage || "Sajnos nem sikerült azonosítani a hozzávalókat. Próbáljon meg egy élesebb fotót készíteni!");
       } else {
-        setResult(response);
+        setResult(data);
       }
     } catch (err) {
       setError("Valami hiba történt a digitális konyhánkban. Kérjük, próbálja újra!");
